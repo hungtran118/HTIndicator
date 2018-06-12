@@ -10,6 +10,7 @@ import UIKit
 
 class HTIndicator5 {
     
+    //MARK:- SUPPORT VARIABLES
     static let shared = HTIndicator5()
     private let containerView = UIView()
     private var keyWindow = UIWindow()

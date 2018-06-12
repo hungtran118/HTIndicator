@@ -10,9 +10,11 @@ import UIKit
 
 class HTIndicatorView: UIView {
     
+    //MARK:- SUPPORT VARIABLES
     private var circle = UIView()
     private var isNotAnimated: Bool = true
     
+    //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
             return self.color!
@@ -32,6 +34,7 @@ class HTIndicatorView: UIView {
         }
     }
     
+    //MARK:- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear

@@ -10,8 +10,10 @@ import UIKit
 
 class HTIndicatorView5: UIView {
     
+    //MARK:- SUPPORT VARIABLES
     private var isNotAnimated: Bool = true
     
+    //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
             return self.color!
@@ -31,6 +33,7 @@ class HTIndicatorView5: UIView {
         }
     }
     
+    //MARK:- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear

@@ -10,6 +10,7 @@ import UIKit
 
 class HTIndicatorView6: UIView {
     
+    //MARK:- SUPPORT VARIABLES
     private var circleLayer = CAShapeLayer()
     private var isAnimating = false
     private var timer = Timer()
@@ -20,6 +21,7 @@ class HTIndicatorView6: UIView {
     
     private var isNotAnimated: Bool = true
     
+    //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
             return self.color!
@@ -40,6 +42,7 @@ class HTIndicatorView6: UIView {
         }
     }
     
+    //MARK:- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
@@ -57,6 +60,7 @@ class HTIndicatorView6: UIView {
         super.init(coder: aDecoder)
     }
     
+    //MARK: - Config
     private func animate() {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear], animations: {
             self.containerView.transform = CGAffineTransform(rotationAngle: .pi)
