@@ -53,14 +53,15 @@ class HTIndicatorView: UIView {
     
     //MARK: - Config
     private func createIndicator() {
-        for i in 0...4 {
+        for i in 0...2 {
             
             circle = UIView(frame: CGRect(x: self.frame.width / 2, y: self.frame.height / 2, width: 0, height: 0))
             circle.backgroundColor = self.color
+            circle.alpha = 0.7
             
             self.addSubview(circle)
             
-            animate(view: circle, delay: Double(i) / 5 * 1 )
+            animate(view: circle, delay: Double(i) / 5 )
         }
     }
     
@@ -75,8 +76,8 @@ class HTIndicatorView: UIView {
             view.bounds = CGRect(origin: view.frame.origin, size: .zero)
             view.layer.cornerRadius = view.frame.width / 2
             view.layer.masksToBounds = view.frame.width / 2 > 0
-            view.alpha = 1
-            self.animate(view: view, delay: 0.5)
+            view.alpha = 0.7
+            self.animate(view: view, delay: 0.2)
         }
     }
 }

@@ -82,7 +82,7 @@ class HTIndicatorView5: UIView {
                 view.layer.cornerRadius = view.frame.width / 2
                 view.layer.masksToBounds = view.frame.width / 2 > 0
                 view.alpha = 0.1
-                self.animate(view: view, delay: 0.5)
+                self.animate(view: view, delay: 0.2)
             })
         }
     }

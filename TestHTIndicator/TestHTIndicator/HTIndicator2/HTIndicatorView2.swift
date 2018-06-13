@@ -61,7 +61,7 @@ class HTIndicatorView2: UIView {
             dot.backgroundColor = self.color
             dot.layer.cornerRadius = dotSize / 2
             self.addSubview(dot)
-            animate(view: dot, delay: Double(i) * 0.1)
+            animate(view: dot, delay: Double(i) * 0.12)
         }
     }
     

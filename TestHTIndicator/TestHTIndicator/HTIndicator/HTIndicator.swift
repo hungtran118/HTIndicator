@@ -19,7 +19,7 @@ class HTIndicator {
     //MARK: - Custom
     private let containerViewColor: UIColor = UIColor(white: 0, alpha: 0.3)
     private let indicatorSize: CGFloat = 60
-    private let indicatorColor: UIColor = UIColor(red: 1, green: 0.2, blue: 0.2, alpha: 1)
+    private let indicatorColor: UIColor = UIColor(red: 0.6, green: 0.2, blue: 0.3, alpha: 1)
     
     //MARK: - Main functions
     func show() {
