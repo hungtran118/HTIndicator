@@ -50,21 +50,27 @@ class AllIndicator {
         containerView.addSubview(indicatorView6)
         
         let indicator = HTIndicatorView(frame: indicatorView.bounds)
+        indicator.startAnimate()
         indicatorView.addSubview(indicator)
         
         let indicator2 = HTIndicatorView2(frame: indicatorView2.bounds)
+        indicator2.startAnimate()
         indicatorView2.addSubview(indicator2)
         
         let indicator3 = HTIndicatorView3(frame: indicatorView3.bounds)
+        indicator3.startAnimate()
         indicatorView3.addSubview(indicator3)
         
         let indicator4 = HTIndicatorView4(frame: indicatorView4.bounds)
+        indicator4.startAnimate()
         indicatorView4.addSubview(indicator4)
         
         let indicator5 = HTIndicatorView5(frame: indicatorView5.bounds)
+        indicator5.startAnimate()
         indicatorView5.addSubview(indicator5)
         
         indicator6 = HTIndicatorView6(frame: indicatorView6.bounds)
+        indicator6.startAnimate()
         indicatorView6.addSubview(indicator6)
         
         let lable1 = UILabel(frame: CGRect(x: (self.keyWindow.frame.width - self.indicatorSize) / 2 / 3, y: (self.keyWindow.frame.height - self.indicatorSize) / 2 - 150, width: self.indicatorSize, height: self.indicatorSize))
@@ -101,7 +107,6 @@ class AllIndicator {
     }
     
     func hide() {
-        indicator6.endAnimate()
         containerView.removeFromSuperview()
         indicatorView.removeFromSuperview()
         indicatorView2.removeFromSuperview()

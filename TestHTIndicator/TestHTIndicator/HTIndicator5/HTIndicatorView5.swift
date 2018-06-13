@@ -16,22 +16,14 @@ class HTIndicatorView5: UIView {
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
-            return self.color!
+            return self.color
         }
         set {
             self.color = newValue
         }
     }
     
-    var color: UIColor? {
-        didSet {
-            if isNotAnimated {
-                createIndicator()
-            } else {
-                isNotAnimated = false
-            }
-        }
-    }
+    var color = UIColor.white
     
     //MARK:- Init
     override init(frame: CGRect) {
@@ -39,15 +31,18 @@ class HTIndicatorView5: UIView {
         self.backgroundColor = UIColor.clear
     }
     
-    override func layoutSubviews() {
-        if color == nil {
-            self.color = UIColor.white
-        }
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+    }
+    
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        self.subviews.forEach({ $0.removeFromSuperview()})
+    }
+    
+    func startAnimate() {
+        createIndicator()
     }
     
     //MARK: - Config
@@ -56,7 +51,7 @@ class HTIndicatorView5: UIView {
         for i in 0...4 {
             
             let circle = UIView(frame: CGRect(x: frame.size.width / 2, y: frame.size.width / 2, width: 0, height: 0))
-            circle.layer.borderColor = self.color?.cgColor
+            circle.layer.borderColor = self.color.cgColor
             circle.layer.borderWidth = frame.size.width / 40
             circle.alpha = 0.1
             

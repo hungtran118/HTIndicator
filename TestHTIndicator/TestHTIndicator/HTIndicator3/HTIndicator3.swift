@@ -12,49 +12,39 @@ class HTIndicator3 {
     
     //MARK:- SUPPORT VARIABLES
     static let shared = HTIndicator3()
-    private var keyWindow = UIWindow()
     private let containerView = UIView()
-    private var indicatorView = UIView()
-    
-    //MARK: - Custom
-    private let containerViewColor: UIColor = UIColor(white: 0, alpha: 0.3)
-    private let indicatorSize: CGFloat = 60
-    private let indicatorColor: UIColor = UIColor(red: 0.2, green: 0.8, blue: 0.6, alpha: 1)
+    private let indicator = HTIndicatorView3(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+    private var isShowing = false
     
     //MARK: - Main functions
+    private init() {}
+    
     func show() {
         
         guard let keyWindow = UIApplication.shared.keyWindow else { return }
-        self.keyWindow = keyWindow
         
-        setupContainer()
-        
-        setupIndicatorView()
-        
-        setupIndicator()
+        if !isShowing {
+            
+            isShowing = true
+            
+            containerView.frame = keyWindow.frame
+            containerView.center = keyWindow.center
+            containerView.backgroundColor = UIColor(white: 0, alpha: 0.3)
+            
+            indicator.center = containerView.center
+            indicator.color = UIColor(red: 0.5, green: 1, blue: 1, alpha: 1)
+            indicator.startAnimate()
+            containerView.addSubview(indicator)
+            
+            keyWindow.addSubview(containerView)
+            
+        }
     }
     
     func hide() {
+        isShowing = false
         containerView.removeFromSuperview()
-        indicatorView.removeFromSuperview()
-    }
-    
-    //MARK: - Config
-    private func setupContainer() {
-        containerView.backgroundColor = containerViewColor
-        containerView.frame = self.keyWindow.frame
-        self.keyWindow.addSubview(containerView)
-    }
-    
-    private func setupIndicatorView() {
-        indicatorView = UIView(frame: CGRect(x: self.keyWindow.frame.midX - self.indicatorSize / 2, y: self.keyWindow.frame.midY - self.indicatorSize / 2, width: self.indicatorSize, height: self.indicatorSize))
-        containerView.addSubview(indicatorView)
-    }
-    
-    private func setupIndicator() {
-        let indicator = HTIndicatorView3(frame: indicatorView.bounds)
-        indicator.color = indicatorColor
-        indicatorView.addSubview(indicator)
+        indicator.removeFromSuperview()
     }
 }
 

@@ -24,23 +24,14 @@ class HTIndicatorView6: UIView {
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
-            return self.color!
+            return self.color
         }
         set {
             self.color = newValue
         }
     }
     
-    var color: UIColor? {
-        didSet {
-            if isNotAnimated {
-                animate()
-                animateCircle(duration: 1)
-            } else {
-                isNotAnimated = false
-            }
-        }
-    }
+    var color = UIColor.white
     
     //MARK:- Init
     override init(frame: CGRect) {
@@ -50,14 +41,19 @@ class HTIndicatorView6: UIView {
         self.addSubview(containerView)
     }
     
-    override func layoutSubviews() {
-        if color == nil {
-            self.color = UIColor.white
-        }
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        self.isAnimating = false
+        self.subviews.forEach({ $0.removeFromSuperview()})
+    }
+    
+    func startAnimate() {
+        animate()
+        animateCircle(duration: 1)
     }
     
     //MARK: - Config
@@ -78,14 +74,10 @@ class HTIndicatorView6: UIView {
         self.animateCircleFull(duration: duration)
     }
     
-    func endAnimate(){
-        self.isAnimating = false
-    }
-    
     private func formatCirle(circleLayer: CAShapeLayer, circlePath: UIBezierPath) {
         circleLayer.path = circlePath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = color?.cgColor
+        circleLayer.strokeColor = color.cgColor
         circleLayer.lineWidth = frame.width / 20
         circleLayer.strokeEnd = 0.0
     }

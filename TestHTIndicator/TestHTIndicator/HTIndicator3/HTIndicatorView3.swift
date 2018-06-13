@@ -16,22 +16,14 @@ class HTIndicatorView3: UIView {
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
-            return self.color!
+            return self.color
         }
         set {
             self.color = newValue
         }
     }
     
-    var color: UIColor? {
-        didSet {
-            if isNotAnimated {
-                createIndicator()
-            } else {
-                isNotAnimated = false
-            }
-        }
-    }
+    var color = UIColor.white
     
     //MARK:- Init
     override init(frame: CGRect) {
@@ -39,15 +31,18 @@ class HTIndicatorView3: UIView {
         self.backgroundColor = UIColor.clear
     }
     
-    override func layoutSubviews() {
-        if color == nil {
-            self.color = UIColor.white
-        }
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+    }
+    
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        self.subviews.forEach({ $0.removeFromSuperview()})
+    }
+    
+    func startAnimate() {
+        createIndicator()
     }
     
     //MARK: - Config
