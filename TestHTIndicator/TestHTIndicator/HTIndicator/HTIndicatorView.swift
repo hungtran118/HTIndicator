@@ -10,10 +10,6 @@ import UIKit
 
 class HTIndicatorView: UIView {
     
-    //MARK:- SUPPORT VARIABLES
-    private var circle = UIView()
-    private var isNotAnimated: Bool = true
-    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -50,7 +46,7 @@ class HTIndicatorView: UIView {
     private func createIndicator() {
         for i in 0...2 {
             
-            circle = UIView(frame: CGRect(x: self.frame.width / 2, y: self.frame.height / 2, width: 0, height: 0))
+            let circle = UIView(frame: CGRect(x: self.frame.width / 2, y: self.frame.height / 2, width: 0, height: 0))
             circle.backgroundColor = self.color
             circle.alpha = 0.7
             

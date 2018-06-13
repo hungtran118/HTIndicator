@@ -19,8 +19,6 @@ class HTIndicatorView6: UIView {
     private var circlePath = UIBezierPath()
     private var containerView = UIView()
     
-    private var isNotAnimated: Bool = true
-    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -37,8 +35,6 @@ class HTIndicatorView6: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
-        containerView.frame = self.bounds
-        self.addSubview(containerView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,23 +44,31 @@ class HTIndicatorView6: UIView {
     override func removeFromSuperview() {
         super.removeFromSuperview()
         self.isAnimating = false
+        containerView.layer.sublayers?.forEach({ $0.removeFromSuperlayer()})
         self.subviews.forEach({ $0.removeFromSuperview()})
     }
     
     func startAnimate() {
-        animate()
+        createIndicator()
         animateCircle(duration: 1)
     }
     
     //MARK: - Config
-    private func animate() {
+    private func createIndicator() {
+        containerView = UIView(frame: self.bounds)
+        self.addSubview(containerView)
+        animate(view: containerView)
+    }
+    
+    private func animate(view: UIView) {
+        
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear], animations: {
-            self.containerView.transform = CGAffineTransform(rotationAngle: .pi)
+            view.transform = CGAffineTransform(rotationAngle: .pi)
         }, completion: { _ in
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear], animations: {
-                self.containerView.transform = CGAffineTransform(rotationAngle: .pi*2)
+                view.transform = CGAffineTransform(rotationAngle: .pi*2)
             }, completion: { _ in
-                self.animate()
+                self.animate(view: view)
             })
         })
     }

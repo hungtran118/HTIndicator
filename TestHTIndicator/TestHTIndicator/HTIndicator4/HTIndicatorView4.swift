@@ -10,9 +10,6 @@ import UIKit
 
 class HTIndicatorView4: UIView {
     
-    //MARK:- SUPPORT VARIABLES
-    private var isNotAnimated: Bool = true
-    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
