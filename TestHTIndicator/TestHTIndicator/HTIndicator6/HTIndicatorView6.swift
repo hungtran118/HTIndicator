@@ -62,10 +62,10 @@ class HTIndicatorView6: UIView {
     
     private func animate(view: UIView) {
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear], animations: {
+        UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
             view.transform = CGAffineTransform(rotationAngle: .pi)
         }, completion: { _ in
-            UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear], animations: {
+            UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
                 view.transform = CGAffineTransform(rotationAngle: .pi*2)
             }, completion: { _ in
                 self.animate(view: view)
@@ -95,7 +95,7 @@ class HTIndicatorView6: UIView {
     }
     
     private func setCircleCounterClockwise(){
-        circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0), radius: (frame.size.width - 10)/2, startAngle: -0.05 * CGFloat(.pi * 2.0), endAngle: CGFloat(.pi * 2.0), clockwise: false)
+        circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0), radius: (frame.size.width - 10)/2, startAngle: -0.1 * CGFloat(.pi * 2.0), endAngle: CGFloat(.pi * 2.0), clockwise: false)
         self.circleLayer.removeAllAnimations()
         self.circleLayer.removeFromSuperlayer()
         formatCirle(circleLayer: self.circleLayer, circlePath: circlePath)
@@ -107,11 +107,11 @@ class HTIndicatorView6: UIView {
             CATransaction.begin()
             animationFull.duration = duration
             animationFull.fromValue = 0
-            animationFull.toValue = 0.95
+            animationFull.toValue = 0.9
             animationFull.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
             animationFull.isRemovedOnCompletion = true
             circleLayer.strokeStart = 0
-            circleLayer.strokeEnd = 0.95
+            circleLayer.strokeEnd = 0.9
             CATransaction.setCompletionBlock {
                 self.setCircleCounterClockwise()
                 self.animateCircleEmpty(duration: duration)

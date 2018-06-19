@@ -48,7 +48,7 @@ class HTIndicatorView: UIView {
             
             let circle = UIView(frame: CGRect(x: self.frame.width / 2, y: self.frame.height / 2, width: 0, height: 0))
             circle.backgroundColor = self.color
-            circle.alpha = 0.7
+            circle.alpha = 0.8
             
             self.addSubview(circle)
             
@@ -67,7 +67,7 @@ class HTIndicatorView: UIView {
             view.bounds = CGRect(origin: view.frame.origin, size: .zero)
             view.layer.cornerRadius = view.frame.width / 2
             view.layer.masksToBounds = view.frame.width / 2 > 0
-            view.alpha = 0.7
+            view.alpha = 0.8
             self.animate(view: view, delay: 0.2)
         }
     }

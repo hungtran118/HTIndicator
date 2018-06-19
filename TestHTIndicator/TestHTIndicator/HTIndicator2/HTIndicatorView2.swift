@@ -61,7 +61,7 @@ class HTIndicatorView2: UIView {
         
         let dotSize = self.frame.width * 0.3
         
-        UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
+        UIView.animate(withDuration: 0.3, delay: delay, options: [.curveEaseIn], animations: {
             view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: dotSize * 0.3, height: dotSize * 0.3))
             view.layer.cornerRadius = view.frame.width / 2
             view.layer.masksToBounds = dotSize / 2 > 0
