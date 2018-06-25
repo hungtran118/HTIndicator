@@ -10,6 +10,9 @@ import UIKit
 
 class HTIndicatorView: UIView {
     
+    //MARK:- SUPPORT VARIABLES
+    private var isAnimate: Bool = true
+    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -36,9 +39,11 @@ class HTIndicatorView: UIView {
     override func removeFromSuperview() {
         super.removeFromSuperview()
         self.subviews.forEach({ $0.removeFromSuperview()})
+        isAnimate = false
     }
     
     func startAnimate() {
+        isAnimate = true
         createIndicator()
     }
     
@@ -51,24 +56,24 @@ class HTIndicatorView: UIView {
             circle.alpha = 0.8
             
             self.addSubview(circle)
-            
             animate(view: circle, delay: Double(i) / 5 )
         }
     }
     
     private func animate(view: UIView, delay: TimeInterval) {
-        
-        UIView.animate(withDuration: 1, delay: delay, options: [.curveLinear], animations: {
-            view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: self.frame.width, height: self.frame.height))
-            view.layer.cornerRadius = view.frame.width / 2
-            view.layer.masksToBounds = view.frame.width / 2 > 0
-            view.alpha = 0
-        }) { _ in
-            view.bounds = CGRect(origin: view.frame.origin, size: .zero)
-            view.layer.cornerRadius = view.frame.width / 2
-            view.layer.masksToBounds = view.frame.width / 2 > 0
-            view.alpha = 0.8
-            self.animate(view: view, delay: 0.2)
+        if isAnimate {
+            UIView.animate(withDuration: 1, delay: delay, options: [.curveLinear], animations: {
+                view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: self.frame.width, height: self.frame.height))
+                view.layer.cornerRadius = view.frame.width / 2
+                view.layer.masksToBounds = view.frame.width / 2 > 0
+                view.alpha = 0
+            }) { _ in
+                view.bounds = CGRect(origin: view.frame.origin, size: .zero)
+                view.layer.cornerRadius = view.frame.width / 2
+                view.layer.masksToBounds = view.frame.width / 2 > 0
+                view.alpha = 0.8
+                self.animate(view: view, delay: 0.2)
+            }
         }
     }
 }

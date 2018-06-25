@@ -10,6 +10,9 @@ import UIKit
 
 class HTIndicatorView3: UIView {
     
+    //MARK:- SUPPORT VARIABLES
+    private var isAnimate: Bool = true
+    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -36,9 +39,12 @@ class HTIndicatorView3: UIView {
     override func removeFromSuperview() {
         super.removeFromSuperview()
         self.subviews.forEach({ $0.removeFromSuperview()})
+        isAnimate = false
+        
     }
     
     func startAnimate() {
+        isAnimate = true
         createIndicator()
     }
     
@@ -58,22 +64,23 @@ class HTIndicatorView3: UIView {
     }
     
     private func animate(view: UIView, delay: Double) {
-        
-        let dotSize = self.frame.width * 0.3
-        
-        UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
-            view.frame.origin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y - dotSize * 0.8)
-            view.layer.cornerRadius = view.frame.width / 2
-            view.layer.masksToBounds = dotSize / 2 > 0
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-                view.frame.origin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + dotSize * 0.8)
+        if isAnimate {
+            let dotSize = self.frame.width * 0.3
+            
+            UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
+                view.frame.origin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y - dotSize * 0.8)
                 view.layer.cornerRadius = view.frame.width / 2
                 view.layer.masksToBounds = dotSize / 2 > 0
             }, completion: { _ in
-                self.animate(view: view, delay: 0.3)
+                UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
+                    view.frame.origin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + dotSize * 0.8)
+                    view.layer.cornerRadius = view.frame.width / 2
+                    view.layer.masksToBounds = dotSize / 2 > 0
+                }, completion: { _ in
+                    self.animate(view: view, delay: 0.3)
+                })
             })
-        })
+        }
     }
 }
 

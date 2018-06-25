@@ -12,7 +12,7 @@ class HTIndicatorView6: UIView {
     
     //MARK:- SUPPORT VARIABLES
     private var circleLayer = CAShapeLayer()
-    private var isAnimating = false
+    private var isAnimate = true
     private var timer = Timer()
     private let animationFull = CABasicAnimation(keyPath: "strokeEnd")
     private let animationEmpty = CABasicAnimation(keyPath: "strokeEnd")
@@ -43,14 +43,15 @@ class HTIndicatorView6: UIView {
     
     override func removeFromSuperview() {
         super.removeFromSuperview()
-        self.isAnimating = false
+        isAnimate = false
         containerView.layer.sublayers?.forEach({ $0.removeFromSuperlayer()})
         self.subviews.forEach({ $0.removeFromSuperview()})
     }
     
     func startAnimate() {
+        isAnimate = true
         createIndicator()
-        animateCircle(duration: 1)
+        animateCircleFull(duration: 1)
     }
     
     //MARK: - Config
@@ -61,21 +62,17 @@ class HTIndicatorView6: UIView {
     }
     
     private func animate(view: UIView) {
-        
-        UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
-            view.transform = CGAffineTransform(rotationAngle: .pi)
-        }, completion: { _ in
+        if isAnimate {
             UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
-                view.transform = CGAffineTransform(rotationAngle: .pi*2)
+                view.transform = CGAffineTransform(rotationAngle: .pi)
             }, completion: { _ in
-                self.animate(view: view)
+                UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
+                    view.transform = CGAffineTransform(rotationAngle: .pi*2)
+                }, completion: { _ in
+                    self.animate(view: view)
+                })
             })
-        })
-    }
-    
-    private func animateCircle(duration: TimeInterval){
-        self.isAnimating = true
-        self.animateCircleFull(duration: duration)
+        }
     }
     
     private func formatCirle(circleLayer: CAShapeLayer, circlePath: UIBezierPath) {
@@ -103,7 +100,7 @@ class HTIndicatorView6: UIView {
     }
     
     private func animateCircleFull(duration: TimeInterval) {
-        if self.isAnimating{
+        if self.isAnimate{
             CATransaction.begin()
             animationFull.duration = duration
             animationFull.fromValue = 0
@@ -123,7 +120,7 @@ class HTIndicatorView6: UIView {
     }
     
     private func animateCircleEmpty(duration: TimeInterval) {
-        if self.isAnimating{
+        if self.isAnimate{
             CATransaction.begin()
             animationEmpty.duration = duration
             animationEmpty.fromValue = 1
