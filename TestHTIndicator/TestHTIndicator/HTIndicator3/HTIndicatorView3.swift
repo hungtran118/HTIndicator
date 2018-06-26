@@ -12,6 +12,7 @@ class HTIndicatorView3: UIView {
     
     //MARK:- SUPPORT VARIABLES
     private var isAnimate: Bool = true
+    private var dotSize: CGFloat = 0
     
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
@@ -45,13 +46,13 @@ class HTIndicatorView3: UIView {
     
     func startAnimate() {
         isAnimate = true
+        dotSize = self.frame.width * 0.3
         createIndicator()
     }
     
     //MARK: - Config
     private func createIndicator(){
         
-        let dotSize = self.frame.width * 0.3
         let dotSpace = self.frame.width * 0.05
         
         for i in 0..<3 {
@@ -65,22 +66,22 @@ class HTIndicatorView3: UIView {
     
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
-            let dotSize = self.frame.width * 0.3
-            
             UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
-                view.frame.origin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y - dotSize * 0.8)
-                view.layer.cornerRadius = view.frame.width / 2
-                view.layer.masksToBounds = dotSize / 2 > 0
+                self.configAniView(view, point: CGPoint(x: view.frame.origin.x, y: view.frame.origin.y - self.dotSize))
             }, completion: { _ in
                 UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-                    view.frame.origin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + dotSize * 0.8)
-                    view.layer.cornerRadius = view.frame.width / 2
-                    view.layer.masksToBounds = dotSize / 2 > 0
+                    self.configAniView(view, point: CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + self.dotSize))
                 }, completion: { _ in
                     self.animate(view: view, delay: 0.3)
                 })
             })
         }
+    }
+    
+    private func configAniView(_ view: UIView, point: CGPoint) {
+        view.frame.origin = point
+        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.masksToBounds = self.dotSize / 2 > 0
     }
 }
 

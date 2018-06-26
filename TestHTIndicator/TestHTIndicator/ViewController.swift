@@ -14,7 +14,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     @objc func hideIndicator() {
@@ -24,7 +28,6 @@ class ViewController: UIViewController {
         HTIndicator4.shared.hide()
         HTIndicator5.shared.hide()
         HTIndicator6.shared.hide()
-        AllIndicator.shared.hide()
     }
     
     @IBAction func startIndicator(_ sender: Any) {
@@ -57,8 +60,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func ViewAllIndicator(_ sender: Any) {
-        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(hideIndicator), userInfo: nil, repeats: false)
-        AllIndicator.shared.show()
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc2 = sb.instantiateViewController(withIdentifier: "ViewController2")
+        
+        navigationController?.pushViewController(vc2, animated: true)
     }
 }
 

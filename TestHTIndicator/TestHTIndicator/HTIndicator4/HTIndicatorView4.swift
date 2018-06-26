@@ -138,18 +138,19 @@ class HTIndicatorView4: UIView {
         }
         
         UIView.animate(withDuration: duration, delay: 0, options: [], animations: {
-            view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: beginSize, height: beginSize))
-            view.alpha = beginAlpha
-            view.layer.cornerRadius = view.frame.width / 2
-            view.layer.masksToBounds = view.frame.width / 2 > 0
+            self.configAniView(view, size: CGSize(width: beginSize, height: beginSize), alpha: beginAlpha)
         }, completion: { _ in
             UIView.animate(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse], animations: {
-                view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: commingSize, height: commingSize))
-                view.alpha = commingAlpha
-                view.layer.cornerRadius = view.frame.width / 2
-                view.layer.masksToBounds = view.frame.width / 2 > 0
+                self.configAniView(view, size: CGSize(width: commingSize, height: commingSize), alpha: commingAlpha)
             })
         })
+    }
+    
+    private func configAniView(_ view: UIView, size: CGSize, alpha: CGFloat) {
+        view.bounds.size = size
+        view.alpha = alpha
+        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.masksToBounds = view.frame.width / 2 > 0
     }
 }
 

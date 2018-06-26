@@ -12,6 +12,7 @@ class HTIndicatorView2: UIView {
     
     //MARK:- SUPPORT VARIABLES
     private var isAnimate: Bool = true
+    private var dotSize: CGFloat = 0
     
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
@@ -44,13 +45,13 @@ class HTIndicatorView2: UIView {
     
     func startAnimate() {
         isAnimate = true
+        dotSize = self.frame.width * 0.3
         createIndicator()
     }
     
     //MARK: - Config
     private func createIndicator(){
         
-        let dotSize = self.frame.width * 0.3
         let dotSpace = self.frame.width * 0.05
         
         for i in 0..<3 {
@@ -64,22 +65,22 @@ class HTIndicatorView2: UIView {
     
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
-            let dotSize = self.frame.width * 0.3
-            
             UIView.animate(withDuration: 0.3, delay: delay, options: [.curveEaseIn], animations: {
-                view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: dotSize * 0.3, height: dotSize * 0.3))
-                view.layer.cornerRadius = view.frame.width / 2
-                view.layer.masksToBounds = dotSize / 2 > 0
+                self.configAniView(view, size: CGSize(width: self.dotSize * 0.3, height: self.dotSize * 0.3))
             }, completion: { _ in
                 UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-                    view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: dotSize, height: dotSize))
-                    view.layer.cornerRadius = view.frame.width / 2
-                    view.layer.masksToBounds = dotSize / 2 > 0
+                    self.configAniView(view, size: CGSize(width: self.dotSize, height: self.dotSize))
                 }, completion: { _ in
                     self.animate(view: view, delay: 0.3)
                 })
             })
         }
+    }
+    
+    private func configAniView(_ view: UIView, size: CGSize) {
+        view.bounds.size = size
+        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.masksToBounds = size.width / 2 > 0
     }
 }
 

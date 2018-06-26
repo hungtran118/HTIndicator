@@ -21,10 +21,10 @@
 		8A32588120BCE299000C09D3 /* HTIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A32588020BCE299000C09D3 /* HTIndicator.swift */; };
 		8A32588320BD0D23000C09D3 /* HTIndicator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A32588220BD0D23000C09D3 /* HTIndicator2.swift */; };
 		8A32588520BD3DD7000C09D3 /* HTIndicator3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A32588420BD3DD7000C09D3 /* HTIndicator3.swift */; };
+		8A5F710D20E1E5CA00EA414A /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F710C20E1E5CA00EA414A /* ViewController2.swift */; };
 		8A64686820BEA9F5000C87F0 /* HTIndicator5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A64686720BEA9F5000C87F0 /* HTIndicator5.swift */; };
 		8AD48B8920BE787300454DC8 /* HTIndicator4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD48B8820BE787300454DC8 /* HTIndicator4.swift */; };
 		8AF31F6920BF952A006B0C50 /* HTIndicator6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF31F6820BF952A006B0C50 /* HTIndicator6.swift */; };
-		8AF31F6F20BFA231006B0C50 /* AllIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF31F6E20BFA231006B0C50 /* AllIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,10 +44,10 @@
 		8A32588020BCE299000C09D3 /* HTIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator.swift; sourceTree = "<group>"; };
 		8A32588220BD0D23000C09D3 /* HTIndicator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator2.swift; sourceTree = "<group>"; };
 		8A32588420BD3DD7000C09D3 /* HTIndicator3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator3.swift; sourceTree = "<group>"; };
+		8A5F710C20E1E5CA00EA414A /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		8A64686720BEA9F5000C87F0 /* HTIndicator5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator5.swift; sourceTree = "<group>"; };
 		8AD48B8820BE787300454DC8 /* HTIndicator4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator4.swift; sourceTree = "<group>"; };
 		8AF31F6820BF952A006B0C50 /* HTIndicator6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator6.swift; sourceTree = "<group>"; };
-		8AF31F6E20BFA231006B0C50 /* AllIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,11 +142,11 @@
 				8A03B8FA20C0E4FE005C6DDD /* HTIndicator5 */,
 				8A03B90820C0EA75005C6DDD /* HTIndicator6 */,
 				8A32587020BCE1B0000C09D3 /* ViewController.swift */,
+				8A5F710C20E1E5CA00EA414A /* ViewController2.swift */,
 				8A32587220BCE1B0000C09D3 /* Main.storyboard */,
 				8A32587520BCE1B1000C09D3 /* Assets.xcassets */,
 				8A32587720BCE1B1000C09D3 /* LaunchScreen.storyboard */,
 				8A32587A20BCE1B1000C09D3 /* Info.plist */,
-				8AF31F6E20BFA231006B0C50 /* AllIndicator.swift */,
 			);
 			path = TestHTIndicator;
 			sourceTree = "<group>";
@@ -223,9 +223,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03B8FC20C0E517005C6DDD /* HTIndicatorView5.swift in Sources */,
+				8A5F710D20E1E5CA00EA414A /* ViewController2.swift in Sources */,
 				8A03B8F620C0E27B005C6DDD /* HTIndicatorView3.swift in Sources */,
 				8A03B8F320C0E113005C6DDD /* HTIndicatorView2.swift in Sources */,
-				8AF31F6F20BFA231006B0C50 /* AllIndicator.swift in Sources */,
 				8A32588320BD0D23000C09D3 /* HTIndicator2.swift in Sources */,
 				8A32587120BCE1B0000C09D3 /* ViewController.swift in Sources */,
 				8AD48B8920BE787300454DC8 /* HTIndicator4.swift in Sources */,

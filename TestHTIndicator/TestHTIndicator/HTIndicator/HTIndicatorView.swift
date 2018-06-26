@@ -62,19 +62,17 @@ class HTIndicatorView: UIView {
     
     private func animate(view: UIView, delay: TimeInterval) {
         if isAnimate {
-            UIView.animate(withDuration: 1, delay: delay, options: [.curveLinear], animations: {
-                view.bounds = CGRect(origin: view.frame.origin, size: CGSize(width: self.frame.width, height: self.frame.height))
-                view.layer.cornerRadius = view.frame.width / 2
-                view.layer.masksToBounds = view.frame.width / 2 > 0
-                view.alpha = 0
-            }) { _ in
-                view.bounds = CGRect(origin: view.frame.origin, size: .zero)
-                view.layer.cornerRadius = view.frame.width / 2
-                view.layer.masksToBounds = view.frame.width / 2 > 0
-                view.alpha = 0.8
-                self.animate(view: view, delay: 0.2)
-            }
+            UIView.animate(withDuration: 1, delay: delay, options: [.curveLinear, .repeat], animations: {
+                self.configAniView(view, size: CGSize(width: self.frame.width, height: self.frame.height), alpha: 0)
+            })
         }
+    }
+    
+    private func configAniView(_ view: UIView, size: CGSize, alpha: CGFloat) {
+        view.bounds.size = size
+        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.masksToBounds = view.frame.width / 2 > 0
+        view.alpha = alpha
     }
 }
 
