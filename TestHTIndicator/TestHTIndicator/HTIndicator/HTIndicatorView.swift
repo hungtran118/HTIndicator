@@ -62,17 +62,26 @@ class HTIndicatorView: UIView {
     
     private func animate(view: UIView, delay: TimeInterval) {
         if isAnimate {
-            UIView.animate(withDuration: 1, delay: delay, options: [.curveLinear, .repeat], animations: {
-                self.configAniView(view, size: CGSize(width: self.frame.width, height: self.frame.height), alpha: 0)
-            })
+            let groupAnimation = CAAnimationGroup()
+            groupAnimation.beginTime = CACurrentMediaTime() + delay
+            groupAnimation.duration = 1
+            groupAnimation.repeatCount = HUGE
+            
+            let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
+            sizeAnimation.fromValue = NSValue(cgSize: CGSize(width: 0, height: 0))
+            sizeAnimation.toValue = NSValue(cgSize: CGSize(width: self.frame.width, height: self.frame.height))
+                
+            let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+            cornerRadiusAnimation.fromValue = 0
+            cornerRadiusAnimation.toValue = self.frame.width / 2
+            
+            let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+            fadeAnimation.fromValue = 0.8
+            fadeAnimation.toValue = 0
+            
+            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation]
+            view.layer.add(groupAnimation, forKey: nil)
         }
-    }
-    
-    private func configAniView(_ view: UIView, size: CGSize, alpha: CGFloat) {
-        view.bounds.size = size
-        view.layer.cornerRadius = view.frame.width / 2
-        view.layer.masksToBounds = view.frame.width / 2 > 0
-        view.alpha = alpha
     }
 }
 
