@@ -14,6 +14,10 @@ class HTIndicatorView2: UIView {
     private var isAnimate: Bool = true
     private var dotSize: CGFloat = 0
     
+    private let groupAnimation = CAAnimationGroup()
+    private let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
+    private let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -59,28 +63,35 @@ class HTIndicatorView2: UIView {
             dot.backgroundColor = self.color
             dot.layer.cornerRadius = dotSize / 2
             self.addSubview(dot)
-            animate(view: dot, delay: Double(i) * 0.12)
+            animate(view: dot, delay: Double(i) * 0.13)
         }
     }
     
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
-            UIView.animate(withDuration: 0.3, delay: delay, options: [.curveEaseIn], animations: {
-                self.configAniView(view, size: CGSize(width: self.dotSize * 0.3, height: self.dotSize * 0.3))
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-                    self.configAniView(view, size: CGSize(width: self.dotSize, height: self.dotSize))
-                }, completion: { _ in
-                    self.animate(view: view, delay: 0.3)
-                })
-            })
+            
+            CATransaction.begin()
+            
+            groupAnimation.duration = 0.3
+            groupAnimation.autoreverses = true
+            groupAnimation.beginTime = round(100*CACurrentMediaTime())/100 + delay
+            
+            sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
+            sizeAnimation.toValue = NSValue(cgSize: CGSize(width: view.frame.size.width * 0.3, height: view.frame.size.width * 0.3))
+            
+            cornerRadiusAnimation.fromValue = view.frame.width / 2
+            cornerRadiusAnimation.toValue = (view.frame.width * 0.3) / 2
+            
+            CATransaction.setCompletionBlock {
+                view.layer.removeAllAnimations()
+                self.animate(view: view, delay: 0.3)
+            }
+            
+            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation]
+            view.layer.add(groupAnimation, forKey: nil)
+            
+            CATransaction.commit()
         }
-    }
-    
-    private func configAniView(_ view: UIView, size: CGSize) {
-        view.bounds.size = size
-        view.layer.cornerRadius = view.frame.width / 2
-        view.layer.masksToBounds = size.width / 2 > 0
     }
 }
 
