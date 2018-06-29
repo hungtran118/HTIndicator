@@ -16,6 +16,7 @@ class HTIndicatorView6: UIView {
     private var timer = Timer()
     private let animationFull = CABasicAnimation(keyPath: "strokeEnd")
     private let animationEmpty = CABasicAnimation(keyPath: "strokeEnd")
+    private let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
     private var circlePath = UIBezierPath()
     private var containerView = UIView()
     
@@ -63,15 +64,11 @@ class HTIndicatorView6: UIView {
     
     private func animate(view: UIView) {
         if isAnimate {
-            UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
-                view.transform = CGAffineTransform(rotationAngle: .pi)
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear], animations: {
-                    view.transform = CGAffineTransform(rotationAngle: .pi*2)
-                }, completion: { _ in
-                    self.animate(view: view)
-                })
-            })
+            rotateAnimation.fromValue = 0
+            rotateAnimation.toValue = CGFloat.pi * 2
+            rotateAnimation.duration = 1.2
+            rotateAnimation.repeatCount = HUGE
+            view.layer.add(rotateAnimation, forKey: nil)
         }
     }
     
