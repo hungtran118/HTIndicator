@@ -13,6 +13,12 @@ class HTIndicatorView5: UIView {
     //MARK:- SUPPORT VARIABLES
     private var isAnimate: Bool = true
     
+    private let groupAnimation = CAAnimationGroup()
+    private let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
+    private let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+    private let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+    private let fadeOutAnimation = CABasicAnimation(keyPath: "opacity")
+    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -65,25 +71,51 @@ class HTIndicatorView5: UIView {
     
     private func animate(view: UIView, delay: TimeInterval) {
         if isAnimate {
-            UIView.animate(withDuration: 0.7, delay: delay, options: [.curveLinear], animations: {
-                self.configAniView(view, size: CGSize(width: self.frame.size.width, height: self.frame.size.width), alpha: 0.6)
-            }) { _ in
-                
-                UIView.animate(withDuration: 0.5, animations: {
-                    view.alpha = 0
-                }, completion: { _ in
-                    self.configAniView(view, size: .zero, alpha: 0.1)
-                    self.animate(view: view, delay: 0.2)
-                })
+            view.layer.removeAnimation(forKey: "animateCircle")
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(0.7)
+            
+            groupAnimation.beginTime = round(10*CACurrentMediaTime())/10 + delay
+            groupAnimation.fillMode = kCAFillModeForwards
+            groupAnimation.isRemovedOnCompletion = false
+            
+            sizeAnimation.fromValue = NSValue(cgSize: CGSize.zero)
+            sizeAnimation.toValue = NSValue(cgSize: CGSize(width: self.frame.size.width, height: self.frame.size.width))
+            
+            cornerRadiusAnimation.fromValue = 0
+            cornerRadiusAnimation.toValue = self.frame.width / 2
+            
+            fadeAnimation.fromValue = 0.1
+            fadeAnimation.toValue = 0.6
+            
+            CATransaction.setCompletionBlock {
+                self.animateFadeOut(view: view)
             }
+        
+            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation]
+            view.layer.add(groupAnimation, forKey: "animateCircle")
+            
+            CATransaction.commit()
         }
     }
     
-    private func configAniView(_ view: UIView, size: CGSize, alpha: CGFloat) {
-        view.bounds.size = size
-        view.alpha = alpha
-        view.layer.cornerRadius = view.frame.width / 2
-        view.layer.masksToBounds = view.frame.width / 2 > 0
+    func animateFadeOut(view: UIView) {
+        view.layer.removeAnimation(forKey: "animateFadeOut")
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.5)
+        
+        self.fadeOutAnimation.fromValue = 0.6
+        self.fadeOutAnimation.toValue = 0
+        self.fadeOutAnimation.isRemovedOnCompletion = false
+        self.fadeOutAnimation.fillMode = kCAFillModeForwards
+        
+        CATransaction.setCompletionBlock({
+            self.animate(view: view, delay: 0.2)
+        })
+        
+        view.layer.add(self.fadeOutAnimation, forKey: "animateFadeOut")
+        
+        CATransaction.commit()
     }
 }
 
