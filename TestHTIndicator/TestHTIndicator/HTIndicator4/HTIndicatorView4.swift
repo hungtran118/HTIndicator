@@ -10,6 +10,10 @@ import UIKit
 
 class HTIndicatorView4: UIView {
     
+    //MARK:- SUPPORT VARIABLES
+    private var isAnimate: Bool = true
+    private var dotSize: CGFloat = 0
+    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -35,17 +39,19 @@ class HTIndicatorView4: UIView {
     
     override func removeFromSuperview() {
         super.removeFromSuperview()
+        isAnimate = false
         self.subviews.forEach({ $0.removeFromSuperview()})
     }
     
     func startAnimate() {
+        dotSize = self.frame.width * 0.2
+        isAnimate = true
         createIndicator()
     }
     
     //MARK: - Config
     private func createIndicator(){
         
-        let dotSize = self.frame.width * 0.2
         let midPos = (self.frame.width - dotSize) / 2
         
         //top
@@ -103,54 +109,93 @@ class HTIndicatorView4: UIView {
     }
     
     private func animate(view: UIView, delay: Double) {
-        
-        let dotSize = self.frame.width * 0.2
-        
-        let input = delay * 8
-        var duration:Double = 0
-        var beginSize:CGFloat = 0
-        var beginAlpha: CGFloat = 0
-        var commingSize: CGFloat = 0
-        var commingAlpha: CGFloat = 0
-        
-        if input == 0 || input == 4{
-            duration = 0
-        } else if input == 1 || input == 5 {
-            duration = 0.5 - 3/8
-        } else if input == 2 || input == 6 {
-            duration = 0.5 - 2/8
-        } else if input == 3 || input == 7 {
-            duration = 0.5 - 1/8
-        } else {
-            duration = 0.5
+        if isAnimate {
+            let input = delay * 8
+            var duration:Double = 0
+            var beginSize:CGFloat = 0
+            var beginAlpha: CGFloat = 0
+            var commingSize: CGFloat = 0
+            var commingAlpha: CGFloat = 0
+            
+            if input == 0 || input == 4{
+                duration = 0
+            } else if input == 1 || input == 5 {
+                duration = 0.5 - 3/8
+            } else if input == 2 || input == 6 {
+                duration = 0.5 - 2/8
+            } else if input == 3 || input == 7 {
+                duration = 0.5 - 1/8
+            } else {
+                duration = 0.5
+            }
+            
+            if input == 0 || input == 1 || input == 2 || input == 3 {
+                beginSize = dotSize
+                beginAlpha = 1
+                commingSize = dotSize / 2
+                commingAlpha = 0.5
+            } else {
+                beginSize = dotSize / 2
+                beginAlpha = 0.5
+                commingSize = dotSize
+                commingAlpha = 1
+            }
+            
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(duration)
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+            
+            let groupAnimation = CAAnimationGroup()
+            let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
+            let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+            let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+            
+            groupAnimation.fillMode = kCAFillModeForwards
+            groupAnimation.isRemovedOnCompletion = false
+            
+            sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
+            sizeAnimation.toValue = NSValue(cgSize: CGSize(width: beginSize, height: beginSize))
+            
+            cornerRadiusAnimation.fromValue = view.frame.size.width / 2
+            cornerRadiusAnimation.toValue = beginSize / 2
+
+            fadeAnimation.fromValue = view.alpha
+            fadeAnimation.toValue = beginAlpha
+            
+            CATransaction.setCompletionBlock {
+                
+                CATransaction.begin()
+                CATransaction.setAnimationDuration(0.5)
+                CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+
+                let groupAnimation2 = CAAnimationGroup()
+                let sizeAnimation2 = CABasicAnimation(keyPath: "bounds.size")
+                let cornerRadiusAnimation2 = CABasicAnimation(keyPath: "cornerRadius")
+                let fadeAnimation2 = CABasicAnimation(keyPath: "opacity")
+
+                groupAnimation2.autoreverses = true
+                groupAnimation2.repeatCount = HUGE
+                
+                sizeAnimation2.fromValue = NSValue(cgSize: CGSize(width: beginSize, height: beginSize))
+                sizeAnimation2.toValue = NSValue(cgSize: CGSize(width: commingSize, height: commingSize))
+
+                cornerRadiusAnimation2.fromValue = beginSize / 2
+                cornerRadiusAnimation2.toValue = commingSize / 2
+
+                fadeAnimation2.fromValue = beginAlpha
+                fadeAnimation2.toValue = commingAlpha
+
+                groupAnimation2.animations = [sizeAnimation2, cornerRadiusAnimation2, fadeAnimation2]
+                view.layer.add(groupAnimation2, forKey: nil)
+
+                CATransaction.commit()
+            }
+            
+            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation]
+            view.layer.add(groupAnimation, forKey: nil)
+            
+            CATransaction.commit()
         }
-        
-        if input == 0 || input == 1 || input == 2 || input == 3 {
-            beginSize = dotSize
-            beginAlpha = 1
-            commingSize = dotSize / 2
-            commingAlpha = 0.5
-        } else {
-            beginSize = dotSize / 2
-            beginAlpha = 0.5
-            commingSize = dotSize
-            commingAlpha = 1
-        }
-        
-        UIView.animate(withDuration: duration, delay: 0, options: [], animations: {
-            self.configAniView(view, size: CGSize(width: beginSize, height: beginSize), alpha: beginAlpha)
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse], animations: {
-                self.configAniView(view, size: CGSize(width: commingSize, height: commingSize), alpha: commingAlpha)
-            })
-        })
-    }
-    
-    private func configAniView(_ view: UIView, size: CGSize, alpha: CGFloat) {
-        view.bounds.size = size
-        view.alpha = alpha
-        view.layer.cornerRadius = view.frame.width / 2
-        view.layer.masksToBounds = view.frame.width / 2 > 0
     }
 }
 

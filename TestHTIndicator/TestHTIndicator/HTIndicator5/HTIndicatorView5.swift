@@ -99,7 +99,7 @@ class HTIndicatorView5: UIView {
         }
     }
     
-    func animateFadeOut(view: UIView) {
+    private func animateFadeOut(view: UIView) {
         view.layer.removeAnimation(forKey: "animateFadeOut")
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.5)
