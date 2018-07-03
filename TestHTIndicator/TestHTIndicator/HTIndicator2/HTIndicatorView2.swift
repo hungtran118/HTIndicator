@@ -69,7 +69,6 @@ class HTIndicatorView2: UIView {
     
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
-            
             CATransaction.begin()
             
             groupAnimation.duration = 0.3

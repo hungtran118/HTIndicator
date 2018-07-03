@@ -111,13 +111,13 @@ class HTIndicatorView4: UIView {
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
             let input = delay * 8
-            var duration:Double = 0
-            var beginSize:CGFloat = 0
+            var duration: Double = 0
+            var beginSize: CGFloat = 0
             var beginAlpha: CGFloat = 0
             var commingSize: CGFloat = 0
             var commingAlpha: CGFloat = 0
             
-            if input == 0 || input == 4{
+            if input == 0 || input == 4 {
                 duration = 0
             } else if input == 1 || input == 5 {
                 duration = 0.5 - 3/8
@@ -141,61 +141,68 @@ class HTIndicatorView4: UIView {
                 commingAlpha = 1
             }
             
+            configAniamte(view: view, duration: duration, beginSize: beginSize, beginAlpha: beginAlpha, commingSize: commingSize, commingAlpha: commingAlpha)
+        }
+    }
+    
+    private func configAniamte(view: UIView, duration: Double, beginSize: CGFloat, beginAlpha: CGFloat, commingSize: CGFloat, commingAlpha: CGFloat) {
+        
+        //Beginning animate
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(duration)
+        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+        
+        let groupAnimation = CAAnimationGroup()
+        let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
+        let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+        
+        groupAnimation.fillMode = kCAFillModeForwards
+        groupAnimation.isRemovedOnCompletion = false
+        
+        sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
+        sizeAnimation.toValue = NSValue(cgSize: CGSize(width: beginSize, height: beginSize))
+        
+        cornerRadiusAnimation.fromValue = view.frame.size.width / 2
+        cornerRadiusAnimation.toValue = beginSize / 2
+        
+        fadeAnimation.fromValue = view.alpha
+        fadeAnimation.toValue = beginAlpha
+        
+        CATransaction.setCompletionBlock {
+            
+            //Comming animate
             CATransaction.begin()
-            CATransaction.setAnimationDuration(duration)
+            CATransaction.setAnimationDuration(0.5)
             CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
             
-            let groupAnimation = CAAnimationGroup()
-            let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
-            let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
-            let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+            let groupAnimation2 = CAAnimationGroup()
+            let sizeAnimation2 = CABasicAnimation(keyPath: "bounds.size")
+            let cornerRadiusAnimation2 = CABasicAnimation(keyPath: "cornerRadius")
+            let fadeAnimation2 = CABasicAnimation(keyPath: "opacity")
             
-            groupAnimation.fillMode = kCAFillModeForwards
-            groupAnimation.isRemovedOnCompletion = false
+            groupAnimation2.autoreverses = true
+            groupAnimation2.repeatCount = HUGE
             
-            sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
-            sizeAnimation.toValue = NSValue(cgSize: CGSize(width: beginSize, height: beginSize))
+            sizeAnimation2.fromValue = NSValue(cgSize: CGSize(width: beginSize, height: beginSize))
+            sizeAnimation2.toValue = NSValue(cgSize: CGSize(width: commingSize, height: commingSize))
             
-            cornerRadiusAnimation.fromValue = view.frame.size.width / 2
-            cornerRadiusAnimation.toValue = beginSize / 2
-
-            fadeAnimation.fromValue = view.alpha
-            fadeAnimation.toValue = beginAlpha
+            cornerRadiusAnimation2.fromValue = beginSize / 2
+            cornerRadiusAnimation2.toValue = commingSize / 2
             
-            CATransaction.setCompletionBlock {
-                
-                CATransaction.begin()
-                CATransaction.setAnimationDuration(0.5)
-                CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
-
-                let groupAnimation2 = CAAnimationGroup()
-                let sizeAnimation2 = CABasicAnimation(keyPath: "bounds.size")
-                let cornerRadiusAnimation2 = CABasicAnimation(keyPath: "cornerRadius")
-                let fadeAnimation2 = CABasicAnimation(keyPath: "opacity")
-
-                groupAnimation2.autoreverses = true
-                groupAnimation2.repeatCount = HUGE
-                
-                sizeAnimation2.fromValue = NSValue(cgSize: CGSize(width: beginSize, height: beginSize))
-                sizeAnimation2.toValue = NSValue(cgSize: CGSize(width: commingSize, height: commingSize))
-
-                cornerRadiusAnimation2.fromValue = beginSize / 2
-                cornerRadiusAnimation2.toValue = commingSize / 2
-
-                fadeAnimation2.fromValue = beginAlpha
-                fadeAnimation2.toValue = commingAlpha
-
-                groupAnimation2.animations = [sizeAnimation2, cornerRadiusAnimation2, fadeAnimation2]
-                view.layer.add(groupAnimation2, forKey: nil)
-
-                CATransaction.commit()
-            }
+            fadeAnimation2.fromValue = beginAlpha
+            fadeAnimation2.toValue = commingAlpha
             
-            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation]
-            view.layer.add(groupAnimation, forKey: nil)
+            groupAnimation2.animations = [sizeAnimation2, cornerRadiusAnimation2, fadeAnimation2]
+            view.layer.add(groupAnimation2, forKey: nil)
             
             CATransaction.commit()
         }
+        
+        groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation]
+        view.layer.add(groupAnimation, forKey: nil)
+        
+        CATransaction.commit()
     }
 }
 

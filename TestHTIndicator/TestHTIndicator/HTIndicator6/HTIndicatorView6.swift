@@ -110,7 +110,6 @@ class HTIndicatorView6: UIView {
                 self.setCircleCounterClockwise()
                 self.animateCircleEmpty(duration: duration)
             }
-            // Do the actual animation
             circleLayer.add(animationFull, forKey: "animateCircle")
             CATransaction.commit()
         }
@@ -129,7 +128,6 @@ class HTIndicatorView6: UIView {
                 self.setCircleClockwise()
                 self.animateCircleFull(duration: duration)
             }
-            // Do the actual animation
             circleLayer.add(animationEmpty, forKey: "animateCircle")
             CATransaction.commit()
         }

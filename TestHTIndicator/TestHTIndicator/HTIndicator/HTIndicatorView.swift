@@ -13,6 +13,11 @@ class HTIndicatorView: UIView {
     //MARK:- SUPPORT VARIABLES
     private var isAnimate: Bool = true
     
+    private let groupAnimation = CAAnimationGroup()
+    private let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
+    private let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+    private let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+    
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
         get {
@@ -62,20 +67,16 @@ class HTIndicatorView: UIView {
     
     private func animate(view: UIView, delay: TimeInterval) {
         if isAnimate {
-            let groupAnimation = CAAnimationGroup()
             groupAnimation.beginTime = CACurrentMediaTime() + delay
             groupAnimation.duration = 1
             groupAnimation.repeatCount = HUGE
             
-            let sizeAnimation = CABasicAnimation(keyPath: "bounds.size")
             sizeAnimation.fromValue = NSValue(cgSize: CGSize(width: 0, height: 0))
             sizeAnimation.toValue = NSValue(cgSize: CGSize(width: self.frame.width, height: self.frame.height))
-                
-            let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
+            
             cornerRadiusAnimation.fromValue = 0
             cornerRadiusAnimation.toValue = self.frame.width / 2
             
-            let fadeAnimation = CABasicAnimation(keyPath: "opacity")
             fadeAnimation.fromValue = 0.8
             fadeAnimation.toValue = 0
             
