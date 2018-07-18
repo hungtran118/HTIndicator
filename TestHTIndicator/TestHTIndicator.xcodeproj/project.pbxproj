@@ -23,6 +23,8 @@
 		8A32588520BD3DD7000C09D3 /* HTIndicator3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A32588420BD3DD7000C09D3 /* HTIndicator3.swift */; };
 		8A5F710D20E1E5CA00EA414A /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F710C20E1E5CA00EA414A /* ViewController2.swift */; };
 		8A64686820BEA9F5000C87F0 /* HTIndicator5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A64686720BEA9F5000C87F0 /* HTIndicator5.swift */; };
+		8A87C00420FED07800623D3D /* HTIndicator7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A87C00320FED07800623D3D /* HTIndicator7.swift */; };
+		8A87C00620FED08200623D3D /* HTIndicatorView7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A87C00520FED08200623D3D /* HTIndicatorView7.swift */; };
 		8AD48B8920BE787300454DC8 /* HTIndicator4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD48B8820BE787300454DC8 /* HTIndicator4.swift */; };
 		8AF31F6920BF952A006B0C50 /* HTIndicator6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF31F6820BF952A006B0C50 /* HTIndicator6.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +48,8 @@
 		8A32588420BD3DD7000C09D3 /* HTIndicator3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator3.swift; sourceTree = "<group>"; };
 		8A5F710C20E1E5CA00EA414A /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		8A64686720BEA9F5000C87F0 /* HTIndicator5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator5.swift; sourceTree = "<group>"; };
+		8A87C00320FED07800623D3D /* HTIndicator7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator7.swift; sourceTree = "<group>"; };
+		8A87C00520FED08200623D3D /* HTIndicatorView7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicatorView7.swift; sourceTree = "<group>"; };
 		8AD48B8820BE787300454DC8 /* HTIndicator4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator4.swift; sourceTree = "<group>"; };
 		8AF31F6820BF952A006B0C50 /* HTIndicator6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTIndicator6.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +145,7 @@
 				8A03B8F720C0E3C5005C6DDD /* HTIndicator4 */,
 				8A03B8FA20C0E4FE005C6DDD /* HTIndicator5 */,
 				8A03B90820C0EA75005C6DDD /* HTIndicator6 */,
+				8A87C00220FED06100623D3D /* HTIndicator7 */,
 				8A32587020BCE1B0000C09D3 /* ViewController.swift */,
 				8A5F710C20E1E5CA00EA414A /* ViewController2.swift */,
 				8A32587220BCE1B0000C09D3 /* Main.storyboard */,
@@ -149,6 +154,15 @@
 				8A32587A20BCE1B1000C09D3 /* Info.plist */,
 			);
 			path = TestHTIndicator;
+			sourceTree = "<group>";
+		};
+		8A87C00220FED06100623D3D /* HTIndicator7 */ = {
+			isa = PBXGroup;
+			children = (
+				8A87C00320FED07800623D3D /* HTIndicator7.swift */,
+				8A87C00520FED08200623D3D /* HTIndicatorView7.swift */,
+			);
+			path = HTIndicator7;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +239,7 @@
 				8A03B8FC20C0E517005C6DDD /* HTIndicatorView5.swift in Sources */,
 				8A5F710D20E1E5CA00EA414A /* ViewController2.swift in Sources */,
 				8A03B8F620C0E27B005C6DDD /* HTIndicatorView3.swift in Sources */,
+				8A87C00620FED08200623D3D /* HTIndicatorView7.swift in Sources */,
 				8A03B8F320C0E113005C6DDD /* HTIndicatorView2.swift in Sources */,
 				8A32588320BD0D23000C09D3 /* HTIndicator2.swift in Sources */,
 				8A32587120BCE1B0000C09D3 /* ViewController.swift in Sources */,
@@ -235,6 +250,7 @@
 				8A03B8EF20C0D64D005C6DDD /* HTIndicatorView.swift in Sources */,
 				8AF31F6920BF952A006B0C50 /* HTIndicator6.swift in Sources */,
 				8A32588120BCE299000C09D3 /* HTIndicator.swift in Sources */,
+				8A87C00420FED07800623D3D /* HTIndicator7.swift in Sources */,
 				8A03B8F920C0E3EE005C6DDD /* HTIndicatorView4.swift in Sources */,
 				8A64686820BEA9F5000C87F0 /* HTIndicator5.swift in Sources */,
 			);

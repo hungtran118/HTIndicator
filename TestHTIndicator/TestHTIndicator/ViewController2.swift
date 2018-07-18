@@ -16,6 +16,7 @@ class ViewController2: UIViewController {
     @IBOutlet weak var htIndicator4: HTIndicatorView4!
     @IBOutlet weak var htIndicator5: HTIndicatorView5!
     @IBOutlet weak var htIndicator6: HTIndicatorView6!
+    @IBOutlet weak var htIndicator7: HTIndicatorView7!
     
     override func viewDidLoad() {
         navigationItem.title = "All Indicator"
@@ -32,5 +33,6 @@ class ViewController2: UIViewController {
         htIndicator4.startAnimate()
         htIndicator5.startAnimate()
         htIndicator6.startAnimate()
+        htIndicator7.startAnimate()
     }
 }

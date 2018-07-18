@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var vwTest: HTIndicatorView7!
     var timer = Timer()
     
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
         HTIndicator4.shared.hide()
         HTIndicator5.shared.hide()
         HTIndicator6.shared.hide()
+        HTIndicator7.shared.hide()
     }
     
     @IBAction func startIndicator(_ sender: Any) {
@@ -57,6 +59,11 @@ class ViewController: UIViewController {
     @IBAction func startIndicator6(_ sender: Any) {
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(hideIndicator), userInfo: nil, repeats: false)
         HTIndicator6.shared.show()
+    }
+    
+    @IBAction func startIndicator7(_ sender: Any) {
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(hideIndicator), userInfo: nil, repeats: false)
+        HTIndicator7.shared.show()
     }
     
     @IBAction func ViewAllIndicator(_ sender: Any) {
