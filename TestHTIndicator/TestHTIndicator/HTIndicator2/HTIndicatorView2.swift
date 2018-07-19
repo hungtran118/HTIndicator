@@ -71,20 +71,19 @@ class HTIndicatorView2: UIView {
         if isAnimate {
             CATransaction.begin()
             
-            groupAnimation.duration = 0.3
-            groupAnimation.autoreverses = true
+            groupAnimation.duration = 1
             groupAnimation.beginTime = round(100*CACurrentMediaTime())/100 + delay
+            groupAnimation.repeatCount = HUGE
             
             sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
             sizeAnimation.toValue = NSValue(cgSize: CGSize(width: view.frame.size.width * 0.3, height: view.frame.size.width * 0.3))
+            sizeAnimation.duration = 0.3
+            sizeAnimation.autoreverses = true
             
             cornerRadiusAnimation.fromValue = view.frame.width / 2
             cornerRadiusAnimation.toValue = (view.frame.width * 0.3) / 2
-            
-            CATransaction.setCompletionBlock {
-                view.layer.removeAllAnimations()
-                self.animate(view: view, delay: 0.3)
-            }
+            cornerRadiusAnimation.duration = 0.3
+            cornerRadiusAnimation.autoreverses = true
             
             groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation]
             view.layer.add(groupAnimation, forKey: nil)

@@ -87,25 +87,22 @@ class HTIndicatorView7: UIView {
             
             CATransaction.begin()
             CATransaction.setAnimationDuration(1)
+            
             groupAnimation.beginTime = round(100*CACurrentMediaTime())/100 + delay
             groupAnimation.fillMode = kCAFillModeForwards
             groupAnimation.isRemovedOnCompletion = false
             
             sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
             sizeAnimation.toValue = NSValue(cgSize: CGSize(width: size, height: size))
-            sizeAnimation.duration = 1
-            sizeAnimation.autoreverses = true
             
             cornerRadiusAnimation.fromValue = view.frame.width / 2
             cornerRadiusAnimation.toValue = size / 2
-            cornerRadiusAnimation.duration = 1
-            cornerRadiusAnimation.autoreverses = true
             
             clockwiseAnimation.path = path.cgPath
-            clockwiseAnimation.duration = 1
             clockwiseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
             
             CATransaction.setCompletionBlock {
+                view.layer.removeAllAnimations()
                 self.tempDot.isHidden = false
                 self.animate(view: view, index: index, delay: 0.1)
             }

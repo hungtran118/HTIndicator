@@ -14,6 +14,7 @@ class HTIndicatorView3: UIView {
     private var isAnimate: Bool = true
     private var dotSize: CGFloat = 0
     
+    private let groupAnimation = CAAnimationGroup()
     private let positionAnimation = CABasicAnimation(keyPath: "position.y")
     
     //MARK:- Custom color
@@ -68,23 +69,18 @@ class HTIndicatorView3: UIView {
     
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
-            CATransaction.begin()
+            groupAnimation.duration = 1
+            groupAnimation.beginTime = round(10*CACurrentMediaTime())/10 + delay
+            groupAnimation.repeatCount = HUGE
             
             positionAnimation.fromValue = view.frame.origin.y + (dotSize / 2)
             positionAnimation.toValue = view.frame.origin.y - (dotSize / 2)
             positionAnimation.duration = 0.3
             positionAnimation.autoreverses = true
-            positionAnimation.beginTime = round(10*CACurrentMediaTime())/10 + delay
             positionAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
             
-            CATransaction.setCompletionBlock {
-                view.layer.removeAllAnimations()
-                self.animate(view: view, delay: 0.3)
-            }
-            
-            view.layer.add(positionAnimation, forKey: nil)
-            
-            CATransaction.commit()
+            groupAnimation.animations = [positionAnimation]
+            view.layer.add(groupAnimation, forKey: nil)
         }
     }
 }

@@ -71,51 +71,38 @@ class HTIndicatorView5: UIView {
     
     private func animate(view: UIView, delay: TimeInterval) {
         if isAnimate {
-            view.layer.removeAnimation(forKey: "animateCircle")
-            CATransaction.begin()
-            CATransaction.setAnimationDuration(0.7)
-            
             groupAnimation.beginTime = round(10*CACurrentMediaTime())/10 + delay
-            groupAnimation.fillMode = kCAFillModeForwards
-            groupAnimation.isRemovedOnCompletion = false
+            groupAnimation.repeatCount = HUGE
+            groupAnimation.duration = 1.2
             
             sizeAnimation.fromValue = NSValue(cgSize: CGSize.zero)
             sizeAnimation.toValue = NSValue(cgSize: CGSize(width: self.frame.size.width, height: self.frame.size.width))
+            sizeAnimation.isRemovedOnCompletion = false
+            sizeAnimation.fillMode = kCAFillModeForwards
+            sizeAnimation.duration = 0.7
             
             cornerRadiusAnimation.fromValue = 0
             cornerRadiusAnimation.toValue = self.frame.width / 2
+            cornerRadiusAnimation.isRemovedOnCompletion = false
+            cornerRadiusAnimation.fillMode = kCAFillModeForwards
+            cornerRadiusAnimation.duration = 0.7
             
             fadeAnimation.fromValue = 0.1
             fadeAnimation.toValue = 0.6
+            fadeAnimation.isRemovedOnCompletion = false
+            fadeAnimation.fillMode = kCAFillModeForwards
+            fadeAnimation.duration = 0.7
             
-            CATransaction.setCompletionBlock {
-                self.animateFadeOut(view: view)
-            }
-        
-            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation]
+            fadeOutAnimation.fromValue = 0.6
+            fadeOutAnimation.toValue = 0
+            fadeOutAnimation.isRemovedOnCompletion = false
+            fadeOutAnimation.fillMode = kCAFillModeForwards
+            fadeOutAnimation.duration = 0.5
+            fadeOutAnimation.beginTime = 0.7
+            
+            groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, fadeAnimation, fadeOutAnimation]
             view.layer.add(groupAnimation, forKey: "animateCircle")
-            
-            CATransaction.commit()
         }
-    }
-    
-    private func animateFadeOut(view: UIView) {
-        view.layer.removeAnimation(forKey: "animateFadeOut")
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(0.5)
-        
-        self.fadeOutAnimation.fromValue = 0.6
-        self.fadeOutAnimation.toValue = 0
-        self.fadeOutAnimation.isRemovedOnCompletion = false
-        self.fadeOutAnimation.fillMode = kCAFillModeForwards
-        
-        CATransaction.setCompletionBlock({
-            self.animate(view: view, delay: 0.2)
-        })
-        
-        view.layer.add(self.fadeOutAnimation, forKey: "animateFadeOut")
-        
-        CATransaction.commit()
     }
 }
 
