@@ -15,7 +15,6 @@ class HTIndicatorView7: UIView {
     private var dotSize: CGFloat = 0
     
     private var path = UIBezierPath()
-    private var tempDot = UIView()
     
     //MARK:- Custom color
     @IBInspectable var indicatorColor: UIColor {
@@ -42,7 +41,6 @@ class HTIndicatorView7: UIView {
     
     override func removeFromSuperview() {
         super.removeFromSuperview()
-        self.subviews.forEach({ $0.removeFromSuperview()})
         path = UIBezierPath()
         isAnimate = false
     }
@@ -51,10 +49,6 @@ class HTIndicatorView7: UIView {
         isAnimate = true
         dotSize = self.frame.width / 5
         path.addArc(withCenter: CGPoint(x: self.bounds.width / 2, y: self.bounds.width / 2), radius: self.bounds.width / 2 - dotSize / 2, startAngle: -0.5 * .pi, endAngle: 1.5 * .pi, clockwise: true)
-        tempDot = UIView(frame: CGRect(x: (self.frame.size.width - dotSize) / 2, y: 0, width: self.dotSize, height: self.dotSize))
-        tempDot.backgroundColor = self.color
-        tempDot.layer.cornerRadius = dotSize / 2
-        self.addSubview(tempDot)
         createIndicator()
     }
     
@@ -75,9 +69,6 @@ class HTIndicatorView7: UIView {
     
     private func animate(view: UIView, index: CGFloat, delay: TimeInterval) {
         if isAnimate {
-            if index == 4 {
-                self.tempDot.isHidden = true
-            }
             let size = dotSize - (CGFloat(index) * (dotSize / 4))
             
             let groupAnimation = CAAnimationGroup()
@@ -85,32 +76,30 @@ class HTIndicatorView7: UIView {
             let cornerRadiusAnimation = CABasicAnimation(keyPath: "cornerRadius")
             let clockwiseAnimation = CAKeyframeAnimation(keyPath: "position")
             
-            CATransaction.begin()
-            CATransaction.setAnimationDuration(1)
-            
-            groupAnimation.beginTime = round(100*CACurrentMediaTime())/100 + delay
-            groupAnimation.fillMode = kCAFillModeForwards
-            groupAnimation.isRemovedOnCompletion = false
+            groupAnimation.duration = 1.3
+            groupAnimation.repeatCount = HUGE
             
             sizeAnimation.fromValue = NSValue(cgSize: view.frame.size)
             sizeAnimation.toValue = NSValue(cgSize: CGSize(width: size, height: size))
+            sizeAnimation.fillMode = kCAFillModeForwards
+            sizeAnimation.isRemovedOnCompletion = false
+            sizeAnimation.duration = 1
+            sizeAnimation.beginTime = delay
             
             cornerRadiusAnimation.fromValue = view.frame.width / 2
             cornerRadiusAnimation.toValue = size / 2
+            cornerRadiusAnimation.fillMode = kCAFillModeForwards
+            cornerRadiusAnimation.isRemovedOnCompletion = false
+            cornerRadiusAnimation.duration = 1
+            cornerRadiusAnimation.beginTime = delay
             
             clockwiseAnimation.path = path.cgPath
             clockwiseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-            
-            CATransaction.setCompletionBlock {
-                view.layer.removeAllAnimations()
-                self.tempDot.isHidden = false
-                self.animate(view: view, index: index, delay: 0.1)
-            }
+            clockwiseAnimation.duration = 1
+            clockwiseAnimation.beginTime = delay
             
             groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation, clockwiseAnimation]
             view.layer.add(groupAnimation, forKey: "animateClockwise")
-            
-            CATransaction.commit()
         }
     }
 }

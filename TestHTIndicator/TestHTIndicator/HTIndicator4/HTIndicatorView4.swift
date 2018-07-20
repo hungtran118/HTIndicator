@@ -40,7 +40,6 @@ class HTIndicatorView4: UIView {
     override func removeFromSuperview() {
         super.removeFromSuperview()
         isAnimate = false
-        self.subviews.forEach({ $0.removeFromSuperview()})
     }
     
     func startAnimate() {

@@ -43,7 +43,6 @@ class HTIndicatorView2: UIView {
     
     override func removeFromSuperview() {
         super.removeFromSuperview()
-        self.subviews.forEach({ $0.removeFromSuperview()})
         isAnimate = false
     }
     
@@ -69,8 +68,6 @@ class HTIndicatorView2: UIView {
     
     private func animate(view: UIView, delay: Double) {
         if isAnimate {
-            CATransaction.begin()
-            
             groupAnimation.duration = 1
             groupAnimation.beginTime = round(100*CACurrentMediaTime())/100 + delay
             groupAnimation.repeatCount = HUGE
@@ -87,8 +84,6 @@ class HTIndicatorView2: UIView {
             
             groupAnimation.animations = [sizeAnimation, cornerRadiusAnimation]
             view.layer.add(groupAnimation, forKey: nil)
-            
-            CATransaction.commit()
         }
     }
 }

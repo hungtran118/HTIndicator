@@ -45,8 +45,6 @@ class HTIndicatorView6: UIView {
     override func removeFromSuperview() {
         super.removeFromSuperview()
         isAnimate = false
-        containerView.layer.sublayers?.forEach({ $0.removeFromSuperlayer()})
-        self.subviews.forEach({ $0.removeFromSuperview()})
     }
     
     func startAnimate() {
